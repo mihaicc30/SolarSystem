@@ -177,10 +177,13 @@ def entity_details():
     e_name = str(input())
     print("Enter your indexes?! i guess?")
     entity_index = []
-    user_entity_index = int(input())
-    entity_index.append(user_entity_index)
+    for i in range(4):
+        user_entity_index = int(input())
+        entity_index.append(user_entity_index)
+        i += 1
 
-    return e_name, user_entity_index
+
+    return e_name, entity_index
 
 
 def list_entity(entity, cols=[]):
