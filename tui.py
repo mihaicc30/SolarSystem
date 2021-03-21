@@ -14,6 +14,7 @@ def welcome():
     print("---Solar Record Management System---")
     print("---" + "-" * x + "---")
 
+
 def menu():
     """
     Task 2: Display a menu of options and read the user's response.
