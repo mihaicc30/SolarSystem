@@ -109,9 +109,10 @@ def source_data_path():
     print("Please enter the file path.")
     x = str(input())
     y = x[::-1]
-
     if (y[0:4]) != "vsc.":
         print("error")
+    else:
+        return x
 
 
 def process_type():
@@ -173,17 +174,22 @@ def entity_details():
     :return: A list containing the name of an entity and a list of column indexes
     """
     # TODO: Your code here
-    print("Name the entity.")
-    e_name = str(input())
-    print("Enter your indexes?! i guess?")
-    entity_index = []
-    for i in range(4):
-        user_entity_index = int(input())
-        entity_index.append(user_entity_index)
-        i += 1
 
+def entity_details():
+        universe = []
+        planet = []
+        print("Name the entity.")
+        planet = input()
+        universe.append(planet)
+        print("Enter your indexes?! i guess thats what he wants?")
+        entity_index = []
 
-    return e_name, entity_index
+        for i in range(4):
+            add_entity_index = int(input())
+            entity_index.append(add_entity_index)
+            i += 1
+        universe.append(entity_index)
+        return universe
 
 
 def list_entity(entity, cols=[]):
@@ -204,7 +210,6 @@ def list_entity(entity, cols=[]):
     :return: does not return anything
     """
     # TODO: Your code here
-
 
 
 def list_categories():
