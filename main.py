@@ -4,7 +4,7 @@
 # Task 18: Create an empty list named 'records'.
 # This will be used to store the date read from the source data file.
 # TODO: Your code here
-
+records = []
 
 def run():
 
@@ -17,6 +17,7 @@ def run():
         # for the different operations that can be performed on the data.
         # Assign the selected option to a suitable local variable
         # TODO: Your code here
+        tui.menu()
 
         # Task 21: Check if the user selected the option for loading data.  If so, then do the following:
         # - Use the appropriate function in the module tui to display a message to indicate that the data loading
@@ -167,6 +168,5 @@ def run():
         # display an error message
         # TODO: Your code here
 
-
-if __name__ == "__main__":
-    run()
+        if __name__ == "__main__":
+            run()

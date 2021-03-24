@@ -177,7 +177,6 @@ def entity_details():
 
 def entity_details():
         universe = []
-        planet = []
         print("Name the entity.")
         planet = input()
         universe.append(planet)
@@ -210,6 +209,17 @@ def list_entity(entity, cols=[]):
     :return: does not return anything
     """
     # TODO: Your code here
+    def searchplanet(x):
+        i = 0
+        while True:
+            if x in planets[i]:
+                return i
+            else:
+                i += 1
+
+    def list_entity(entity):
+        entity = searchplanet(entity)
+        return planets[entity]
 
 
 def list_categories():
