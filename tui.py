@@ -176,10 +176,10 @@ def entity_details():
     # TODO: Your code here
 
 def entity_details():
-        universe = []
+        planets = []
         print("Name the entity.")
         planet = input()
-        universe.append(planet)
+        planets.append(planet)
         print("Enter your indexes?! i guess thats what he wants?")
         entity_index = []
 
@@ -187,8 +187,8 @@ def entity_details():
             add_entity_index = int(input())
             entity_index.append(add_entity_index)
             i += 1
-        universe.append(entity_index)
-        return universe
+        planets.append(entity_index)
+        return planets
 
 
 def list_entity(entity, cols=[]):
@@ -209,17 +209,30 @@ def list_entity(entity, cols=[]):
     :return: does not return anything
     """
     # TODO: Your code here
-    def searchplanet(x):
-        i = 0
-        while True:
-            if x in planets[i]:
-                return i
-            else:
-                i += 1
+    planets = [["earth", True, 23], ["mars", False, 44], ["pluto", True, 99]]
 
-    def list_entity(entity):
-        entity = searchplanet(entity)
-        return planets[entity]
+    def search2(planet, cols=[]):
+        for x in range(len(planets)):
+            for y in range(len(planets[x])):
+                if planets[x][y] == planet and cols == [None]:
+                    print(planets[x])
+                elif planets[x][y] == planet and cols != [None]:
+                    for elem in cols:
+                        print(planets[x][elem], end=" ")
+
+    def search1(planet):
+        for x in range(len(planets)):
+            for y in range(len(planets[x])):
+                if planets[x][y] == planet:
+                    print(planets[x])
+
+    def search3(x, y=None):
+        if y == None:
+            search1(x)
+        else:
+            search2(x, y)
+
+    search3("mars", [0, 2])
 
 
 def list_categories():
