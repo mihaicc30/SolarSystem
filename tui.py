@@ -209,31 +209,27 @@ def list_entity(entity, cols=[]):
     :return: does not return anything
     """
     # TODO: Your code here
-    planets = [["earth", True, 23], ["mars", False, 44], ["pluto", True, 99]]
-
-    def search2(planet, cols=[]):
-        for x in range(len(planets)):
-            for y in range(len(planets[x])):
-                if planets[x][y] == planet and cols == [None]:
-                    print(planets[x])
-                elif planets[x][y] == planet and cols != [None]:
-                    for elem in cols:
-                        print(planets[x][elem], end=" ")
-
-    def search1(planet):
-        for x in range(len(planets)):
-            for y in range(len(planets[x])):
-                if planets[x][y] == planet:
-                    print(planets[x])
-
-    def search3(x, y=None):
-        if y == None:
-            search1(x)
+    def list_entity(entity, cols=[]):
+        if cols == []:
+            for planet in planets:
+                if planet == entity:
+                    print(planets[planet])
         else:
-            search2(x, y)
-
-    search3("mars", [0, 2])
-
+            c = []
+            b = planets.get(entity)
+            for i in range(len(b)):
+                for y in range(len(cols)):
+                    if i == cols[y]:
+                        c.append(b[i])
+            print(c)
+#testing
+# planets = {
+#   "Earth":["Earth", 9.8, True],
+#   "Mars":["Mars", 33, False],
+#   "Pluto":["Pluto", 21, True]
+# }
+#
+# list_entity("Earth", [0,1])
 
 def list_categories():
     """
