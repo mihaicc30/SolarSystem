@@ -301,6 +301,27 @@ def visualise():
     :return: None if an invalid selection is made otherwise an integer corresponding to a valid option
     """
     # TODO: Your code here
+    menu = {
+        1: "Entities by type",
+        2: "Entities by gravity",
+        3: "Summary of orbits",
+        4: "Animate gravities"
+    }
+    def visualise():
+        print("""
+      1: Entities by type,
+      2: Entities by gravity,
+      3: Summary of orbits,
+      4: Animate gravities
+      """)
+        while True:
+            for choice in menu:
+                choice = int(input("Please enter the number corresponding to the menu you desire. "))
+                if choice < 5:
+                    return choice
+                else:
+                    print("Your selection is invalid.")
+                    return None
 
 
 def save():
