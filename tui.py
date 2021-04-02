@@ -257,7 +257,10 @@ def gravity_range():
     :return: a tuple with the lower and upper limits
     """
     # TODO: Your code here
-
+    def gravity_range():
+        min = float(input("Input min value of gravity: "))
+        max = float(input("Input max value of gravity: "))
+        return ((min, max))
 
 def orbits():
     """
@@ -271,6 +274,15 @@ def orbits():
     :return: a list of entity names
     """
     # TODO: Your code here
+    def orbits():
+        print("Type 'x' to finish calling entities..")
+        x = []
+        while True:
+            y = input("Enter an entity name: ")
+            if y != "x":
+                x.append(y)
+            else:
+                return x
 
 
 def visualise():
