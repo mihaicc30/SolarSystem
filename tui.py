@@ -231,6 +231,30 @@ def list_entity(entity, cols=[]):
 #
 # list_entity("Earth", [0,1])
 
+
+def list_entities():
+    """
+    Task 11: Display each entity in entities. Only the data for the specified column indexes will be displayed.
+    If no column indexes have been specified, then all the data for an entity will be displayed.
+
+    The function should have two parameters as follows:
+    entities    which is a list of entities where each entity itself is a list of data values
+    cols        this is a list of integer values that represent column indexes.
+                the default value for this is an empty list i.e. []
+
+    You will need to add these parameters to the function definition.
+
+    The function should iterate through each entity in entities and display the entity.
+    An entity is a list of values e.g. ['Earth', TRUE, 9.8]
+    Only the columns whose indexes are included in cols should be displayed for each entity.
+    If cols is an empty list then all values for the entity should be displayed.
+
+    :param entities: A list of data values related to an entity
+    :param cols: A list of integer values that represent column indexes
+    :return: Does not return anything
+    """
+    # TODO: Your code here
+
 def list_categories():
     """
     Task 12: Display the contents of the dictionary categories.
@@ -339,3 +363,34 @@ def save():
     :return: None if an invalid selection is made otherwise an integer corresponding to a valid option
     """
     # TODO: Your code here
+
+    print("""Choose from the following menu 
+        how you would like to save your data:
+
+        1. Export as JSON
+        2. Export as TXT
+        3. Quit
+        """)
+    while True:
+        choice = int(input())
+        if choice == 1:
+            FLNA = str(input("How would you like to name your file? "))
+            x = str(FLNA + ".json")
+            x = open(x, "w")
+            x.close()
+            print("Program will now quit.")
+            return choice
+        elif choice == 2:
+            FLNA = str(input("How would you like to name your file? "))
+            x = str(FLNA + ".txt")
+            x = open(x, "w")
+            x.close()
+            print("Program will now quit.")
+            return choice
+        elif choice == 3:
+            print("Program will now quit.")
+            break
+        else:
+            print("You input an invalid option. Try again.")
+            return
+save()
