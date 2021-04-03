@@ -31,12 +31,13 @@ def menu():
     :return: None if invalid selection otherwise an integer corresponding to a valid selection
     """
     # TODO: Your code here
-    print("Please choose from the following options:")
-    print("1. Local Data")
-    print("2. Process Data")
-    print("3. Visualise Data")
-    print("4. Save Data")
-    print("5. Exit")
+    print("""
+    Please choose from the following options:
+    1. Local Data
+    2. Process Data
+    3. Visualise Data
+    4. Save Data
+    5. Exit""")
 
     x = int(input())
     if x > 5:
@@ -57,8 +58,6 @@ def started(operation):
     :return: Does not return anything
     """
     # TODO: Your code here
-
-    operation = str(input())
     print(f"{operation} has started.")
 
 
@@ -74,8 +73,6 @@ def completed(operation):
     :return: Does not return anything
     """
     # TODO: Your code here
-
-    operation = str(input())
     print(f"{operation} has completed.")
 
 
@@ -110,7 +107,8 @@ def source_data_path():
     x = str(input())
     y = x[::-1]
     if (y[0:4]) != "vsc.":
-        print("error")
+        print("Error! File path is not suitable.")
+        return None
     else:
         return x
 
@@ -133,14 +131,17 @@ def process_type():
     """
     # TODO: Your code here
 
-    print("1. Retrieve entity")
-    print("2. Retrieve entity details")
-    print("3. Categorise entities by type")
-    print("4. Categorise entities by gravity")
-    print("5. Sumarise entities by orbit")
+    print("""
+    1. Retrieve entity
+    2. Retrieve entity details
+    3. Categorise entities by type
+    4. Categorise entities by gravity
+    5. Sumarise entities by orbit
+    """)
     x = int(input())
     if x > 5:
       print("Sorry, that is not an option.")
+      return None
     else:
         return x
 
@@ -156,8 +157,8 @@ def entity_name():
     """
     # TODO: Your code here
 
-    print("Please enter the name of an entity.")
-    e_name = input()
+
+    e_name = input("Please enter the name of an entity.")
     print("You have entered the entity", e_name+".")
     return e_name
 
@@ -209,27 +210,28 @@ def list_entity(entity, cols=[]):
     :return: does not return anything
     """
     # TODO: Your code here
-    def list_entity(entity, cols=[]):
-        if cols == []:
-            for planet in planets:
-                if planet == entity:
-                    print(planets[planet])
-        else:
-            c = []
-            b = planets.get(entity)
-            for i in range(len(b)):
-                for y in range(len(cols)):
-                    if i == cols[y]:
-                        c.append(b[i])
-            print(c)
-#testing
+
+    if cols == []: #list is empty
+        for planet in planets:
+            if planet == entity:
+                print(planets[planet])
+    else:
+        c = []
+        b = planets.get(entity)
+        for i in range(len(b)):
+            for y in range(len(cols)):
+                if i == cols[y]:
+                    c.append(b[i])
+        print(c)
+
+# #testing
 # planets = {
 #   "Earth":["Earth", 9.8, True],
 #   "Mars":["Mars", 33, False],
 #   "Pluto":["Pluto", 21, True]
 # }
 #
-# list_entity("Earth", [0,1])
+# list_entity("Earth")
 
 
 def list_entities():
@@ -268,7 +270,7 @@ def list_categories():
     :return: Does not return anything
     """
     # TODO: Your code here
-
+    print(planets.items())
 
 def gravity_range():
     """
@@ -298,15 +300,14 @@ def orbits():
     :return: a list of entity names
     """
     # TODO: Your code here
-    def orbits():
-        print("Type 'x' to finish calling entities..")
-        x = []
-        while True:
-            y = input("Enter an entity name: ")
-            if y != "x":
-                x.append(y)
-            else:
-                return x
+    print("Type 'x' to finish calling entities..")
+    x = []
+    while True:
+        y = input("Enter an entity name: ")
+        if y != "x":
+            x.append(y)
+        else:
+            return x
 
 
 def visualise():
@@ -331,21 +332,21 @@ def visualise():
         3: "Summary of orbits",
         4: "Animate gravities"
     }
-    def visualise():
-        print("""
+
+    print("""
       1: Entities by type,
       2: Entities by gravity,
       3: Summary of orbits,
       4: Animate gravities
       """)
-        while True:
-            for choice in menu:
-                choice = int(input("Please enter the number corresponding to the menu you desire. "))
-                if choice < 5:
-                    return choice
-                else:
-                    print("Your selection is invalid.")
-                    return None
+    while True:
+        for choice in menu:
+            choice = int(input("Please enter the number corresponding to the menu you desire. "))
+            if choice < 5:
+                return choice
+            else:
+                print("Your selection is invalid.")
+                return None
 
 
 def save():
@@ -393,4 +394,3 @@ def save():
         else:
             print("You input an invalid option. Try again.")
             return
-save()
