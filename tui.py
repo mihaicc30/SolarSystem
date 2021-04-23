@@ -11,8 +11,9 @@ def welcome():
     # TODO: Your code here
     x = len("Solar Record Management System")
     print(3 * x * "-")
-    print(x*"-"+"Solar Record Management System"+x*"-")
+    print(x * "-" + "Solar Record Management System" + x * "-")
     print(3 * x * "-")
+
 
 def menu():
     """
@@ -38,11 +39,11 @@ def menu():
     4. Save Data
     5. Exit""")
 
-    x = int(input())
-    if x > 5:
+    option = int(input())
+    if option > 5:
         print("Sorry, that option is not available.")
     else:
-        return x
+        return option
 
 
 def started(operation):
@@ -102,14 +103,12 @@ def source_data_path():
     :return: None if the file path does not end in 'csv' otherwise return the file path entered by the user
     """
     # TODO: Your code here
-    print("Please enter the file path.")
-    x = str(input())
-    y = x[::-1]
-    if (y[0:4]) != "vsc.":
+    path = str(input("Please enter the file path.\n"))
+    if not path.endswith(".csv"):
         print("Error! File path is not suitable.")
         return None
     else:
-        return x
+        return path
 
 
 def process_type():
@@ -129,20 +128,18 @@ def process_type():
     :return: None if an invalid selection made otherwise an integer corresponding to a valid option
     """
     # TODO: Your code here
-
-    print("""
+    option = int(input("""
     1. Retrieve entity
     2. Retrieve entity details
     3. Categorise entities by type
     4. Categorise entities by gravity
-    5. Sumarise entities by orbit
-    """)
-    x = int(input())
-    if x > 5:
-      print("Sorry, that is not an option.")
-      return None
+    5. Summarise entities by orbit
+    """))
+    if option > 5:
+        print("Sorry, that is not an option.")
+        return None
     else:
-        return x
+        return option
 
 
 def entity_name():
@@ -156,9 +153,8 @@ def entity_name():
     """
     # TODO: Your code here
 
-
     e_name = input("Please enter the name of an entity.")
-    print("You have entered the entity", e_name+".")
+    print("You have entered the entity", e_name + ".")
     return e_name
 
 
@@ -174,21 +170,19 @@ def entity_details():
     :return: A list containing the name of an entity and a list of column indexes
     """
     # TODO: Your code here
+    planets = []
+    print("Name the entity.")
+    planet = input()
+    planets.append(planet)
+    print("Enter your indexes?! i guess that's what he wants?")
+    entity_index = []
 
-def entity_details():
-        planets = []
-        print("Name the entity.")
-        planet = input()
-        planets.append(planet)
-        print("Enter your indexes?! i guess thats what he wants?")
-        entity_index = []
-
-        for i in range(4):
-            add_entity_index = int(input())
-            entity_index.append(add_entity_index)
-            i += 1
-        planets.append(entity_index)
-        return planets
+    for i in range(4):
+        add_entity_index = int(input())
+        entity_index.append(add_entity_index)
+        i += 1
+    planets.append(entity_index)
+    return planets
 
 
 def list_entity(entity, cols=[]):
@@ -210,7 +204,7 @@ def list_entity(entity, cols=[]):
     """
     # TODO: Your code here
 
-    if cols == []: #list is empty
+    if cols == []:  # list is empty
         for planet in planets:
             if planet == entity:
                 print(planets[planet])
@@ -222,6 +216,7 @@ def list_entity(entity, cols=[]):
                 if i == cols[y]:
                     c.append(b[i])
         print(c)
+
 
 # #testing
 # planets = {
@@ -256,6 +251,7 @@ def list_entities():
     """
     # TODO: Your code here
 
+
 def list_categories():
     """
     Task 12: Display the contents of the dictionary categories.
@@ -281,11 +277,12 @@ def gravity_range():
 
     :return: a tuple with the lower and upper limits
     """
+
     # TODO: Your code here
-    def gravity_range():
-        min = float(input("Input min value of gravity: "))
-        max = float(input("Input max value of gravity: "))
-        return ((min, max))
+    min_gravity = float(input("Input min value of gravity: "))
+    max_gravity = float(input("Input max value of gravity: "))
+    return min_gravity, max_gravity
+
 
 def orbits():
     """
@@ -300,13 +297,13 @@ def orbits():
     """
     # TODO: Your code here
     print("Type 'x' to finish calling entities..")
-    x = []
+    to_orbit = []
     while True:
-        y = input("Enter an entity name: ")
-        if y != "x":
-            x.append(y)
+        entities = input("Enter an entity name: ")
+        if entities != "x":
+            to_orbit.append(entities)
         else:
-            return x
+            return to_orbit
 
 
 def visualise():
@@ -363,26 +360,24 @@ def save():
     :return: None if an invalid selection is made otherwise an integer corresponding to a valid option
     """
     # TODO: Your code here
-
-    print("""Choose from the following menu 
+    while True:
+        choice = int(input("""Choose from the following menu 
         how you would like to save your data:
 
         1. Export as JSON
         2. Export as TXT
         3. Quit
-        """)
-    while True:
-        choice = int(input())
+        """))
         if choice == 1:
-            FLNA = str(input("How would you like to name your file? "))
-            x = str(FLNA + ".json")
+            file_name = str(input("How would you like to name your file? "))
+            x = str(file_name + ".json")
             x = open(x, "w")
             x.close()
             print("Program will now quit.")
             return choice
         elif choice == 2:
-            FLNA = str(input("How would you like to name your file? "))
-            x = str(FLNA + ".txt")
+            file_name = str(input("How would you like to name your file? "))
+            x = str(file_name + ".txt")
             x = open(x, "w")
             x.close()
             print("Program will now quit.")
