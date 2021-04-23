@@ -10,10 +10,9 @@ def welcome():
     """
     # TODO: Your code here
     x = len("Solar Record Management System")
-    print("---"+"-" * x+"---")
-    print("---Solar Record Management System---")
-    print("---" + "-" * x + "---")
-
+    print(3 * x * "-")
+    print(x*"-"+"Solar Record Management System"+x*"-")
+    print(3 * x * "-")
 
 def menu():
     """
@@ -270,7 +269,7 @@ def list_categories():
     :return: Does not return anything
     """
     # TODO: Your code here
-    print(planets.items())
+
 
 def gravity_range():
     """
