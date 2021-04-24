@@ -204,28 +204,18 @@ def list_entity(entity, cols=[]):
     """
     # TODO: Your code here
 
-    if cols == []:  # list is empty
-        for planet in planets:
-            if planet == entity:
-                print(planets[planet])
-    else:
-        c = []
-        b = planets.get(entity)
-        for i in range(len(b)):
-            for y in range(len(cols)):
-                if i == cols[y]:
-                    c.append(b[i])
-        print(c)
-
-
-# #testing
-# planets = {
-#   "Earth":["Earth", 9.8, True],
-#   "Mars":["Mars", 33, False],
-#   "Pluto":["Pluto", 21, True]
-# }
-#
-# list_entity("Earth")
+    temp2 = []
+    with open("planets.csv") as file:  #need to replace this file name with the function later
+        for line in file.readlines():
+            if line.startswith(entity):
+                temp1 = line.strip().split(",")   #nightmare...
+                if cols:
+                    for elem in cols:
+                        temp2.append(temp1[elem]) #if cols is not empty
+                else:
+                    print(temp1) #print all entity
+                if temp2:
+                    print(temp2) #print the section of the entity
 
 
 def list_entities():
