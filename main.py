@@ -15,11 +15,25 @@ def run():
     welcome()
 
     while True:
+        menu1 = {
+            1: "Local Data",
+            2: "Process Data",
+            3: "Visualise Data",
+            4: "Save Data",
+            5: "Exit"
+        }
+        menu2 = {
+            1: "Retrieve entity",
+            2: "Retrieve entity details",
+            3: "Categorise entities by type",
+            4: "Categorise entities by gravity",
+            5: "Summarise entities by orbit"
+        }
         # Task 20: Using the appropriate function in the module tui, display a menu of options
         # for the different operations that can be performed on the data.
         # Assign the selected option to a suitable local variable
         # TODO: Your code here
-        menu()
+        choice = menu()
 
         # Task 21: Check if the user selected the option for loading data.  If so, then do the following:
         # - Use the appropriate function in the module tui to display a message to indicate that the data loading
@@ -35,7 +49,8 @@ def run():
         # - Read each line from the CSV file and add it to the list 'records'. You should appropriately handle the case
         # where the file cannot be found
         # TODO: Your code here
-
+        if choice == 1:
+            started(menu1[choice])
 
         # Task 22: Check if the user selected the option for processing data.  If so, then do the following:
         # - Use the appropriate function in the module tui to display a message to indicate that the data processing
@@ -101,6 +116,7 @@ def run():
         #       - Use the appropriate function in the module tui to indicate that the orbit summary process has
         #       completed.
         # TODO: Your code here
+        if menu() == 2:
 
         # Task 23: Check if the user selected the option for visualising data.  If so, then do the following:
         # - Use the appropriate function in the module tui to indicate that the data visualisation operation
@@ -150,6 +166,7 @@ def run():
         #       - Use the appropriate function in the module tui to indicate that the gravity animation visualisation
         #       process has completed.
         # TODO: Your code here
+        if menu() == 3:
 
         # Task 28: Check if the user selected the option for saving data.  If so, then do the following:
         # - Use the appropriate function in the module tui to indicate that the save data operation has started.
@@ -162,15 +179,20 @@ def run():
         # a JSON file using in the following order: all the planets in alphabetical order followed by non-planets 
         # in alphabetical order.
         # TODO: Your code here
+        if menu() == 4:
+
 
         # Task 29: Check if the user selected the option for exiting.  If so, then do the following:
         # break out of the loop
         # TODO: Your code here
+        if menu() == 5:
+            print("Program will now exit.")
+            break
 
 
         # Task 30: If the user selected an invalid option then use the appropriate function of the module tui to
         # display an error message
         # TODO: Your code here
         error("error msg")
-
+print("Have a nice day. Thank you for using our service :)")
 if __name__ == "__main__":

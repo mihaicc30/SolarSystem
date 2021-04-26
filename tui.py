@@ -205,10 +205,10 @@ def list_entity(entity, cols=[]):
     # TODO: Your code here
 
     temp2 = []
-    with open("planets.csv") as file:  #need to replace this file name with the function later
+    with open(source_data_path()) as file:  #need to replace this file name with the function later
         for line in file.readlines():
             if line.startswith(entity):
-                temp1 = line.strip().split(",")   #nightmare...
+                temp1 = line.strip().split(",")   #nightmare with pycharm for some reason...
                 if cols:
                     for elem in cols:
                         temp2.append(temp1[elem]) #if cols is not empty
@@ -240,6 +240,12 @@ def list_entities():
     :return: Does not return anything
     """
     # TODO: Your code here
+    entities = []
+    cols = []
+    with open("planets.csv", "r") as file:
+        for line in file.readlines():
+            entities.append(line)
+        print(entities)
 
 
 def list_categories():
