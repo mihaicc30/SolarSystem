@@ -51,6 +51,7 @@ def run():
         # TODO: Your code here
         if choice == 1:
             started(menu1[choice])
+            completed(menu1[choice])
 
         # Task 22: Check if the user selected the option for processing data.  If so, then do the following:
         # - Use the appropriate function in the module tui to display a message to indicate that the data processing
@@ -79,7 +80,7 @@ def run():
         #       process has started.
         #       - Use the appropriate function in the module tui to retrieve the entity details
         #       - Find the record for the specified entity details in records.  You should appropriately handle the
-        #       case where the entity cannot be found.
+        #       case where the entity cannot be found.2
         #       - Use the appropriate function in the module tui to list the entity
         #       - Use the appropriate function in the module tui to indicate that the entity details retrieval
         #       process has completed.
@@ -116,7 +117,27 @@ def run():
         #       - Use the appropriate function in the module tui to indicate that the orbit summary process has
         #       completed.
         # TODO: Your code here
-        if menu() == 2:
+        elif choice == 2:
+            started(menu1[choice])
+            completed(menu1[choice])
+
+            choice2 = process_type()
+
+            if choice2 == 1:
+                started(menu2[choice])
+                list_entity(entity_name())
+
+            elif choice2 == 2:
+                started(menu2[choice])
+
+            elif choice2 == 3:
+                started(menu2[choice])
+
+            elif choice2 == 4:
+                started(menu2[choice])
+
+            elif choice2 == 5:
+                started(menu2[choice])
 
         # Task 23: Check if the user selected the option for visualising data.  If so, then do the following:
         # - Use the appropriate function in the module tui to indicate that the data visualisation operation
@@ -166,7 +187,9 @@ def run():
         #       - Use the appropriate function in the module tui to indicate that the gravity animation visualisation
         #       process has completed.
         # TODO: Your code here
-        if menu() == 3:
+        elif choice == 3:
+            started(menu1[choice])
+            completed(menu1[choice])
 
         # Task 28: Check if the user selected the option for saving data.  If so, then do the following:
         # - Use the appropriate function in the module tui to indicate that the save data operation has started.
@@ -179,13 +202,14 @@ def run():
         # a JSON file using in the following order: all the planets in alphabetical order followed by non-planets 
         # in alphabetical order.
         # TODO: Your code here
-        if menu() == 4:
-
+        elif choice == 4:
+            started(menu1[choice])
+            completed(menu1[choice])
 
         # Task 29: Check if the user selected the option for exiting.  If so, then do the following:
         # break out of the loop
         # TODO: Your code here
-        if menu() == 5:
+        elif choice == 5:
             print("Program will now exit.")
             break
 
@@ -193,6 +217,8 @@ def run():
         # Task 30: If the user selected an invalid option then use the appropriate function of the module tui to
         # display an error message
         # TODO: Your code here
-        error("error msg")
-print("Have a nice day. Thank you for using our service :)")
+        else:
+            error(choice)
+    print("Have a nice day. Thank you for using our service :)")
+
 if __name__ == "__main__":

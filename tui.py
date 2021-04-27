@@ -41,7 +41,7 @@ def menu():
 
     option = int(input())
     if option > 5:
-        print("Sorry, that option is not available.")
+        print("Sorry, that option is not available. Try again.")
     else:
         return option
 
@@ -88,7 +88,7 @@ def error(error_msg):
     :return: Does not return anything
     """
     # TODO: Your code here
-    print(f"Error!", error_msg + ".")
+    print("Error! {} not possible.".format(error_msg))
 
 
 def source_data_path():
@@ -153,9 +153,13 @@ def entity_name():
     """
     # TODO: Your code here
 
-    e_name = input("Please enter the name of an entity.")
-    print("You have entered the entity", e_name + ".")
-    return e_name
+    e_name = input("Please enter the name of an entity.\n")
+    if e_name is None:
+        print("Error! Name doesnt exist or none is inputted.")
+        return None
+    else:
+        print("You have entered the entity", e_name + ".")
+        return e_name
 
 
 def entity_details():
