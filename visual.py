@@ -10,6 +10,10 @@ def entities_pie(categories):
     :param categories: A dictionary with planets and non-planets
     :return: Does not return anything
     """
+    labels = ["Planets", "Non-Planets"]
+    size = [5, 100]  # need to link categories
+    plt.pie(size, labels=labels)
+    plt.show()
 
 
 def entities_bar(categories):
@@ -21,6 +25,11 @@ def entities_bar(categories):
     :param categories: A dictionary with entities categorised into 'low', 'medium' and 'high' gravity
     :return: Does not return anything
     """
+
+    x = ["Low", "Medium", "High"]
+    y = [1, 2, 3]  # need to link categories
+    plt.bar(x, y)
+    plt.show()
 
 
 def orbits(summary):
@@ -53,4 +62,3 @@ def gravity_animation(categories):
     :param categories: A dictionary containing "low", "medium" and "high" gravity entities
     :return: Does not return anything
     """
-

@@ -58,7 +58,7 @@ def started(operation):
     :return: Does not return anything
     """
     # TODO: Your code here
-    print(f"{operation} has started.")
+    print(f"{operation} has \033[0;32mstarted\033[0m.")
 
 
 def completed(operation):
@@ -73,7 +73,7 @@ def completed(operation):
     :return: Does not return anything
     """
     # TODO: Your code here
-    print(f"{operation} has completed.")
+    print(f"{operation} has \033[0;33mcompleted\033[0m.")
 
 
 def error(error_msg):
@@ -103,12 +103,13 @@ def source_data_path():
     :return: None if the file path does not end in 'csv' otherwise return the file path entered by the user
     """
     # TODO: Your code here
+    import os.path
     path = str(input("Please enter the file path.\n"))
-    if not path.endswith(".csv"):
-        print("Error! File path is not suitable.")
-        return None
-    else:
+    if path.endswith(".csv") and os.path.isfile(path):
         return path
+    else:
+        print("Error! File path is not suitable.")
+        return
 
 
 def process_type():
@@ -154,12 +155,8 @@ def entity_name():
     # TODO: Your code here
 
     e_name = input("Please enter the name of an entity.\n")
-    if e_name is None:
-        print("Error! Name doesnt exist or none is inputted.")
-        return None
-    else:
-        print("You have entered the entity", e_name + ".")
-        return e_name
+    # print("You have entered the entity", e_name + ".")
+    return e_name
 
 
 def entity_details():
@@ -174,19 +171,12 @@ def entity_details():
     :return: A list containing the name of an entity and a list of column indexes
     """
     # TODO: Your code here
-    planets = []
-    print("Name the entity.")
-    planet = input()
-    planets.append(planet)
+    entity = str(input("Name the entity."))
     print("Enter your indexes?! i guess that's what he wants?")
     entity_index = []
-
-    for i in range(4):
-        add_entity_index = int(input())
-        entity_index.append(add_entity_index)
-        i += 1
-    planets.append(entity_index)
-    return planets
+    for i in range(2):
+        entity_index.append(int(input()))
+    return entity, entity_index
 
 
 def list_entity(entity, cols=[]):
@@ -209,17 +199,17 @@ def list_entity(entity, cols=[]):
     # TODO: Your code here
 
     temp2 = []
-    with open(source_data_path()) as file:  #need to replace this file name with the function later
+    with open(source_data_path()) as file:
         for line in file.readlines():
             if line.startswith(entity):
-                temp1 = line.strip().split(",")   #nightmare with pycharm for some reason...
+                temp1 = line.strip().split(",")
                 if cols:
                     for elem in cols:
-                        temp2.append(temp1[elem]) #if cols is not empty
+                        temp2.append(temp1[elem])  # if cols is not empty
                 else:
-                    print(temp1) #print all entity
+                    print(temp1)  # print all entity
                 if temp2:
-                    print(temp2) #print the section of the entity
+                    print(temp2)  # print the section of the entity
 
 
 def list_entities():
@@ -244,12 +234,7 @@ def list_entities():
     :return: Does not return anything
     """
     # TODO: Your code here
-    entities = []
-    cols = []
-    with open("planets.csv", "r") as file:
-        for line in file.readlines():
-            entities.append(line)
-        print(entities)
+    list_entity(str(input()))
 
 
 def list_categories():

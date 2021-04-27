@@ -51,6 +51,9 @@ def run():
         # TODO: Your code here
         if choice == 1:
             started(menu1[choice])
+            with open(source_data_path()) as db:
+                for line in db.readlines():
+                    records.append(line.strip().split(","))
             completed(menu1[choice])
 
         # Task 22: Check if the user selected the option for processing data.  If so, then do the following:
@@ -117,28 +120,27 @@ def run():
         #       - Use the appropriate function in the module tui to indicate that the orbit summary process has
         #       completed.
         # TODO: Your code here
-        elif choice == 2:
+        elif choice == 2:  # first menu 2nd choice
             started(menu1[choice])
             completed(menu1[choice])
+            choice2 = process_type()  # start the submenu
 
-            choice2 = process_type()
+            if choice2 == 1:  # Retrieve entity
+                started(menu2[choice2])
+                x, y = entity_details()
+                list_entity(x, y)
 
-            if choice2 == 1:
-                started(menu2[choice])
-                list_entity(entity_name())
-
-            elif choice2 == 2:
-                started(menu2[choice])
-
+                completed(menu2[choice])
+            elif choice2 == 2:  # Retrieve entities details
+                started(menu2[choice2])
+                list_entities()
+                completed(menu2[choice])
             elif choice2 == 3:
-                started(menu2[choice])
-
+                started(menu2[choice2])
             elif choice2 == 4:
-                started(menu2[choice])
-
+                started(menu2[choice2])
             elif choice2 == 5:
-                started(menu2[choice])
-
+                started(menu2[choice2])
         # Task 23: Check if the user selected the option for visualising data.  If so, then do the following:
         # - Use the appropriate function in the module tui to indicate that the data visualisation operation
         # has started.
@@ -199,7 +201,7 @@ def run():
         # To save the data, you should demonstrate the application of OOP principles including the concepts of
         # abstraction and inheritance.  You should create an AbstractWriter class with abstract methods and a concrete
         # Writer class that inherits from the AbstractWriter class.  You should then use this to write the records to
-        # a JSON file using in the following order: all the planets in alphabetical order followed by non-planets 
+        # a JSON file using in the following order: all the planets in alphabetical order followed by non-planets
         # in alphabetical order.
         # TODO: Your code here
         elif choice == 4:
@@ -221,4 +223,6 @@ def run():
             error(choice)
     print("Have a nice day. Thank you for using our service :)")
 
+
 if __name__ == "__main__":
+    run()
