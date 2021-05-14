@@ -171,12 +171,12 @@ def entity_details():
     :return: A list containing the name of an entity and a list of column indexes
     """
     # TODO: Your code here
-    entity = str(input("Name the entity."))
-    print("Enter your indexes?! i guess that's what he wants?")
+    entity = str(input("Name the entity.\n"))
+    print("What index would you like to see?")
     entity_index = []
     for i in range(2):
         entity_index.append(int(input()))
-    return entity, entity_index
+    return [entity, entity_index]
 
 
 def list_entity(entity, cols=[]):
@@ -203,7 +203,7 @@ def list_entity(entity, cols=[]):
         for line in file.readlines():
             if line.startswith(entity):
                 temp1 = line.strip().split(",")
-                if cols:
+                if len(cols) > 0:
                     for elem in cols:
                         temp2.append(temp1[elem])  # if cols is not empty
                 else:
@@ -234,7 +234,7 @@ def list_entities():
     :return: Does not return anything
     """
     # TODO: Your code here
-    list_entity(str(input()))
+    list_entity(str(input("Enter an entity.\n")))
 
 
 def list_categories():

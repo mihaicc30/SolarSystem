@@ -1,6 +1,8 @@
 # Task 17: Import the modules csv, tui and visual
 # TODO: Your code here
 from tui import *
+from visual import *
+from csv import *
 
 # Task 18: Create an empty list named 'records'.
 # This will be used to store the date read from the source data file.
@@ -125,16 +127,18 @@ def run():
             completed(menu1[choice])
             choice2 = process_type()  # start the submenu
 
-            if choice2 == 1:  # Retrieve entity
-                started(menu2[choice2])
-                x, y = entity_details()
-                list_entity(x, y)
-
-                completed(menu2[choice])
-            elif choice2 == 2:  # Retrieve entities details
+            if choice2 == 1:  # 2.1.Retrieve entity
                 started(menu2[choice2])
                 list_entities()
                 completed(menu2[choice])
+
+            elif choice2 == 2:  # 2.2.Retrieve entities details
+                started(menu2[choice2])
+                x, y = entity_details()  # x = planet    y = indexes
+                list_entity(x, y)
+
+                completed(menu2[choice])
+
             elif choice2 == 3:
                 started(menu2[choice2])
             elif choice2 == 4:
