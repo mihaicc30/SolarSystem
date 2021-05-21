@@ -3,6 +3,7 @@
 from tui import *
 from visual import *
 from csv import *
+from csv import DictReader
 
 # Task 18: Create an empty list named 'records'.
 # This will be used to store the date read from the source data file.
@@ -53,9 +54,11 @@ def run():
         # TODO: Your code here
         if choice == 1:
             started(menu1[choice])
-            with open(source_data_path()) as db:
-                for line in db.readlines():
-                    records.append(line.strip().split(","))
+            x = source_data_path()
+            if x:
+                with open(x) as db:
+                    for line in db.readlines():
+                        records.append(line.strip().split(","))
             completed(menu1[choice])
 
         # Task 22: Check if the user selected the option for processing data.  If so, then do the following:
@@ -130,17 +133,19 @@ def run():
             if choice2 == 1:  # 2.1.Retrieve entity
                 started(menu2[choice2])
                 list_entities()
-                completed(menu2[choice])
+                completed(menu2[choice2])
 
             elif choice2 == 2:  # 2.2.Retrieve entities details
                 started(menu2[choice2])
-                x, y = entity_details()  # x = planet    y = indexes
+                x, y = entity_details()
                 list_entity(x, y)
 
-                completed(menu2[choice])
-
-            elif choice2 == 3:
+                completed(menu2[choice2])
+            elif choice2 == 3:  # categorise by type, planet or non planet
                 started(menu2[choice2])
+
+
+                completed(menu2[choice2])
             elif choice2 == 4:
                 started(menu2[choice2])
             elif choice2 == 5:

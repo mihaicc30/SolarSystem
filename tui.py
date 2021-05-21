@@ -109,7 +109,7 @@ def source_data_path():
         return path
     else:
         print("Error! File path is not suitable.")
-        return
+        return None
 
 
 def process_type():
@@ -156,7 +156,10 @@ def entity_name():
 
     e_name = input("Please enter the name of an entity.\n")
     # print("You have entered the entity", e_name + ".")
-    return e_name
+    if e_name:
+        return e_name
+    else:
+        return None
 
 
 def entity_details():
@@ -172,10 +175,13 @@ def entity_details():
     """
     # TODO: Your code here
     entity = str(input("Name the entity.\n"))
-    print("What index would you like to see?")
     entity_index = []
-    for i in range(2):
-        entity_index.append(int(input()))
+    number_of_indexes_to_see = input("How many indexes you would like to see?\nIndex numbers: ")
+    if not number_of_indexes_to_see:
+        number_of_indexes_to_see == 0
+    else:
+        for i in range(int(number_of_indexes_to_see)):
+            entity_index.append(int(input("What index would you like to see? ")))
     return [entity, entity_index]
 
 
@@ -250,6 +256,12 @@ def list_categories():
     :return: Does not return anything
     """
     # TODO: Your code here
+    categories = input("What category?")
+    file_handle = open(source_data_path())
+    csv_reader = DictReader(file_handle)
+    for row in csv_reader:
+        print(row[categories])
+    file_handle.close()
 
 
 def gravity_range():
