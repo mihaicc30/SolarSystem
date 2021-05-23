@@ -40,7 +40,7 @@ def menu():
     5. Exit""")
 
     option = int(input())
-    if option > 5:
+    if option > 5 or option < 1:
         print("Sorry, that option is not available. Try again.")
     else:
         return option
@@ -129,18 +129,20 @@ def process_type():
     :return: None if an invalid selection made otherwise an integer corresponding to a valid option
     """
     # TODO: Your code here
-    option = int(input("""
+    option = input("""
     1. Retrieve entity
     2. Retrieve entity details
     3. Categorise entities by type
     4. Categorise entities by gravity
     5. Summarise entities by orbit
-    """))
-    if option > 5:
+    """)
+    if not option:
+        print()
+    elif int(option) > 5:
         print("Sorry, that is not an option.")
         return None
     else:
-        return option
+        return int(option)
 
 
 def entity_name():
@@ -256,12 +258,7 @@ def list_categories():
     :return: Does not return anything
     """
     # TODO: Your code here
-    categories = input("What category?")
-    file_handle = open(source_data_path())
-    csv_reader = DictReader(file_handle)
-    for row in csv_reader:
-        print(row[categories])
-    file_handle.close()
+    categories = {"": [], "": []}
 
 
 def gravity_range():

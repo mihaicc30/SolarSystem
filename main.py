@@ -25,6 +25,7 @@ def run():
             4: "Save Data",
             5: "Exit"
         }
+
         menu2 = {
             1: "Retrieve entity",
             2: "Retrieve entity details",
@@ -52,11 +53,12 @@ def run():
         # - Read each line from the CSV file and add it to the list 'records'. You should appropriately handle the case
         # where the file cannot be found
         # TODO: Your code here
+        import csv
         if choice == 1:
             started(menu1[choice])
             x = source_data_path()
             if x:
-                with open(x) as db:
+                with open(x, newline="") as db:
                     for line in db.readlines():
                         records.append(line.strip().split(","))
             completed(menu1[choice])
@@ -129,27 +131,48 @@ def run():
             started(menu1[choice])
             completed(menu1[choice])
             choice2 = process_type()  # start the submenu
+            if not choice2:
+                print("There was no input. Please try again.")
+            else:
+                if choice2 == 1:  # 2.1.Retrieve entity
+                    started(menu2[choice2])
+                    list_entities()
+                    completed(menu2[choice2])
+                elif choice2 == 2:  # 2.2.Retrieve entities details
+                    started(menu2[choice2])
+                    x, y = entity_details()
+                    list_entity(x, y)
+                    completed(menu2[choice2])
+                elif choice2 == 3:  # categorise by type, planet or non planet
+                    started(menu2[choice2])
+                    categories = {"Planets": [], "Non-Planets": []}
+                    for row in records:
+                        if "TRUE" in row:
+                            categories["Planets"].append(row[0])
+                        else:
+                            categories["Non-Planets"].append(row[0])
+                    print("Planets: ", categories["Planets"])
+                    print("Non-Planets: ", categories["Non-Planets"])
+                    completed(menu2[choice2])
+                elif choice2 == 4:  # Categorise entities by gravity
+                    started(menu2[choice2])
+                    categories = {"Gravity-Low": [], "Gravity-Medium": [], "Gravity-High": []}
+                    min, max = gravity_range()
+                    for row in records:
+                        if row[8] != "gravity":
+                            if float(row[8]) < min:
+                                categories["Gravity-Low"].append(row[8])
+                            elif min <= float(row[8]) < max:
+                                categories["Gravity-Medium"].append(row[8])
+                            elif float(row[8]) >= max:
+                                categories["Gravity-High"].append(row[8])
+                    print("Low G: ", categories["Gravity-Low"])
+                    print("Medium G: ", categories["Gravity-Medium"])
+                    print("High G: ", categories["Gravity-High"])
 
-            if choice2 == 1:  # 2.1.Retrieve entity
-                started(menu2[choice2])
-                list_entities()
-                completed(menu2[choice2])
-
-            elif choice2 == 2:  # 2.2.Retrieve entities details
-                started(menu2[choice2])
-                x, y = entity_details()
-                list_entity(x, y)
-
-                completed(menu2[choice2])
-            elif choice2 == 3:  # categorise by type, planet or non planet
-                started(menu2[choice2])
-
-
-                completed(menu2[choice2])
-            elif choice2 == 4:
-                started(menu2[choice2])
-            elif choice2 == 5:
-                started(menu2[choice2])
+                    completed(menu2[choice2])
+                elif choice2 == 5:
+                    started(menu2[choice2])
         # Task 23: Check if the user selected the option for visualising data.  If so, then do the following:
         # - Use the appropriate function in the module tui to indicate that the data visualisation operation
         # has started.
@@ -161,7 +184,6 @@ def run():
         # following:
         # - Use the appropriate function in the module tui to retrieve the type of visualisation to display.
         # - Check what option has been selected
-        #
         #   - if the user selected the option to visualise the entity type then
         #       - Use the appropriate function in the module tui to indicate that the entity type visualisation
         #       process has started.
