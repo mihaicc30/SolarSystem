@@ -9,7 +9,7 @@ from csv import DictReader
 # This will be used to store the date read from the source data file.
 # TODO: Your code here
 records = []
-
+categories = {}
 
 def run():
     # Task 19: Call the function welcome of the module tui.
@@ -25,13 +25,18 @@ def run():
             4: "Save Data",
             5: "Exit"
         }
-
         menu2 = {
             1: "Retrieve entity",
             2: "Retrieve entity details",
             3: "Categorise entities by type",
             4: "Categorise entities by gravity",
             5: "Summarise entities by orbit"
+        }
+        menu3 = {
+            1: "Entities by type",
+            2: "Entities by gravity",
+            3: "Summary of orbits",
+            4: "Animate gravities"
         }
         # Task 20: Using the appropriate function in the module tui, display a menu of options
         # for the different operations that can be performed on the data.
@@ -131,6 +136,7 @@ def run():
             started(menu1[choice])
             completed(menu1[choice])
             choice2 = process_type()  # start the submenu
+            global categories
             if not choice2:
                 print("There was no input. Please try again.")
             else:
@@ -154,6 +160,13 @@ def run():
                     print("Planets: ", categories["Planets"])
                     print("Non-Planets: ", categories["Non-Planets"])
                     completed(menu2[choice2])
+                    #######################
+                    with open("types.txt", "w") as F:
+                        F.write(str(len(categories["Planets"])))
+                    with open("types.txt", "a") as F:
+                        F.write("\n")
+                        F.write(str(len(categories["Non-Planets"])))
+                    #################
                 elif choice2 == 4:  # Categorise entities by gravity
                     started(menu2[choice2])
                     categories = {"Gravity-Low": [], "Gravity-Medium": [], "Gravity-High": []}
@@ -169,8 +182,17 @@ def run():
                     print("Low G: ", categories["Gravity-Low"])
                     print("Medium G: ", categories["Gravity-Medium"])
                     print("High G: ", categories["Gravity-High"])
-
                     completed(menu2[choice2])
+                    #######################
+                    with open("gravities.txt", "w") as F:
+                        F.write(str(len(categories["Gravity-Low"])))
+                    with open("gravities.txt", "a") as F:
+                        F.write("\n")
+                        F.write(str(len(categories["Gravity-Medium"])))
+                        F.write("\n")
+                        F.write(str(len(categories["Gravity-High"])))
+
+                    #################
                 elif choice2 == 5:
                     started(menu2[choice2])
         # Task 23: Check if the user selected the option for visualising data.  If so, then do the following:
@@ -223,6 +245,28 @@ def run():
         elif choice == 3:
             started(menu1[choice])
             completed(menu1[choice])
+            choice3 = visualise()  # start the submenu
+            if not choice3:
+                print("There was no input. Please try again.")
+            else:
+                if choice3 == 1:  # Entities by type
+                    started(menu3[choice3])
+                    entities_pie(categories)
+                    completed(menu3[choice3])
+                elif choice3 == 2:  # Entities by gravity
+                    started(menu3[choice3])
+                    entities_bar(categories)
+                    completed(menu3[choice3])
+                elif choice3 == 3:  # Summary of orbits
+                    started(menu3[choice3])
+
+                    completed(menu3[choice3])
+                elif choice3 == 4:  # Animate gravities
+                    started(menu3[choice3])
+
+                    completed(menu3[choice3])
+
+
 
         # Task 28: Check if the user selected the option for saving data.  If so, then do the following:
         # - Use the appropriate function in the module tui to indicate that the save data operation has started.

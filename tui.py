@@ -37,9 +37,10 @@ def menu():
     2. Process Data
     3. Visualise Data
     4. Save Data
-    5. Exit""")
+    5. Exit
+    """)
 
-    option = int(input())
+    option = int(input("    Input: "))
     if option > 5 or option < 1:
         print("Sorry, that option is not available. Try again.")
     else:
@@ -135,7 +136,8 @@ def process_type():
     3. Categorise entities by type
     4. Categorise entities by gravity
     5. Summarise entities by orbit
-    """)
+    
+    Input: """)
     if not option:
         print()
     elif int(option) > 5:
@@ -322,17 +324,16 @@ def visualise():
         3: "Summary of orbits",
         4: "Animate gravities"
     }
-
     print("""
-      1: Entities by type,
-      2: Entities by gravity,
-      3: Summary of orbits,
+      1: Entities by type
+      2: Entities by gravity
+      3: Summary of orbits
       4: Animate gravities
       """)
     while True:
         for choice in menu:
-            choice = int(input("Please enter the number corresponding to the menu you desire. "))
-            if choice < 5:
+            choice = int(input("    Input: "))
+            if 0 < choice < 5:
                 return choice
             else:
                 print("Your selection is invalid.")

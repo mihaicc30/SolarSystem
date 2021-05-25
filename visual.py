@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import main
 
 
 def entities_pie(categories):
@@ -10,9 +11,14 @@ def entities_pie(categories):
     :param categories: A dictionary with planets and non-planets
     :return: Does not return anything
     """
+    with open("types.txt", "r") as F:
+        for line in F:
+            x = line[0]
+            y = line[1]
     labels = ["Planets", "Non-Planets"]
-    size = [5, 100]  # need to link categories
-    plt.pie(size, labels=labels)
+    data = [x, y]  # need to link categories
+    explode = [0.2, 0]
+    plt.pie(data, labels=labels, startangle=90, explode=explode, shadow=True)
     plt.show()
 
 
@@ -25,10 +31,22 @@ def entities_bar(categories):
     :param categories: A dictionary with entities categorised into 'low', 'medium' and 'high' gravity
     :return: Does not return anything
     """
+    with open("gravities.txt") as f:
+        lista = []
+        for line in f:
+            lista.append(line.strip())
+        low = lista[0]
+        med = lista[1]
+        high = lista[2]
+    print(low, med, high)
 
     x = ["Low", "Medium", "High"]
-    y = [1, 2, 3]  # need to link categories
-    plt.bar(x, y)
+    y = [low, med, high]  # need to link categories
+    fig = plt.figure(figsize=(10, 5))
+    plt.bar(x, [int(z) for z in y], color='blue', width=0.4)
+    plt.ylabel("Number of planets")
+    plt.xlabel("Types of gravity")
+    plt.title("Solar System")
     plt.show()
 
 
