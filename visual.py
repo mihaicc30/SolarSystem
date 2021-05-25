@@ -80,3 +80,49 @@ def gravity_animation(categories):
     :param categories: A dictionary containing "low", "medium" and "high" gravity entities
     :return: Does not return anything
     """
+    import matplotlib.pyplot as plt
+    import matplotlib.animation as animation
+    import numpy as np
+
+    fig, ax = plt.subplots(1, 3)
+
+    def animate(frame):
+        ax[0].cla()
+        ax[0].set_xlim(0, 2 * np.pi)
+        ax[0].set_ylim(-8, 8)
+        x = np.arange(0, 2 * np.pi, 0.01)
+        y = np.sin(x + frame)
+        ax[0].plot(x, y)
+        ax[0].set_xlabel('Low Gravity')
+        ax[0].axes.get_yaxis().set_visible(False)
+        ax[0].set_xticklabels([])
+        ax[0].set_xticks([])
+        #
+        ax[1].cla()
+        ax[1].set_xlim(0, 2 * np.pi)
+        ax[1].set_ylim(-2, 2)
+        x = np.arange(0, 2 * np.pi, 0.01)
+        y = np.sin(x + frame)
+        ax[1].plot(x, y)
+        ax[1].set_xlabel('Medium Gravity')
+        ax[1].axes.get_yaxis().set_visible(False)
+        ax[1].set_xticklabels([])
+        ax[1].set_xticks([])
+        #
+        ax[2].cla()
+        ax[2].set_xlim(0, 2 * np.pi)
+        ax[2].set_ylim(-1, 1)
+        x = np.arange(0, 2 * np.pi, 0.01)
+        y = np.sin(x + frame)
+        ax[2].plot(x, y)
+        ax[2].set_xlabel('High Gravity')
+        ax[2].axes.get_yaxis().set_visible(False)
+        ax[2].set_xticklabels([])
+        ax[2].set_xticks([])
+
+    def run():
+        some_animation = animation.FuncAnimation(fig, animate, frames=720, interval=100)
+
+        plt.show()
+
+    run()

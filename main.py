@@ -263,7 +263,7 @@ def run():
                     completed(menu3[choice3])
                 elif choice3 == 4:  # Animate gravities
                     started(menu3[choice3])
-
+                    gravity_animation(categories)
                     completed(menu3[choice3])
 
 

@@ -382,4 +382,4 @@ def save():
             break
         else:
             print("You input an invalid option. Try again.")
-            return
+
