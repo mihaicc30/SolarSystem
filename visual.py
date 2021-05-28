@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
-import main
+import matplotlib.animation as animation
+import numpy as np
 
 
 def entities_pie(categories):
@@ -11,13 +12,14 @@ def entities_pie(categories):
     :param categories: A dictionary with planets and non-planets
     :return: Does not return anything
     """
-    with open("types.txt", "r") as F:
-        for line in F:
-            x = line[0]
-            y = line[1]
+    categories = {}
+    with open("types.txt", "r") as file:
+        x = file.readline()
+        y = file.readline()
+        print(x, y)
     labels = ["Planets", "Non-Planets"]
     data = [x, y]  # need to link categories
-    explode = [0.2, 0]
+    explode = [0.5, 0]
     plt.pie(data, labels=labels, startangle=90, explode=explode, shadow=True)
     plt.show()
 
@@ -38,11 +40,9 @@ def entities_bar(categories):
         low = lista[0]
         med = lista[1]
         high = lista[2]
-    print(low, med, high)
-
     x = ["Low", "Medium", "High"]
     y = [low, med, high]  # need to link categories
-    fig = plt.figure(figsize=(10, 5))
+
     plt.bar(x, [int(z) for z in y], color='blue', width=0.4)
     plt.ylabel("Number of planets")
     plt.xlabel("Types of gravity")
@@ -68,7 +68,21 @@ def orbits(summary):
     :param summary: A dictionary containing the "small" and "large" entities for each orbited planet.
     :return: Does not return anything
     """
+    with open("to_orbit.txt") as f:
+        lista = []
+        for line in f:
+            lista.append(line.strip())
+        small = lista[0]
+        large = lista[1]
+    fig, ax = plt.subplots(1, 2)
+    x = 0
+    y1 = int(small)
+    y2 = int(large)
+    print( y1, y2)
+    # ax[0].bar(x,y1)
+    # ax[1].bar(x,y2)
 
+    plt.show()
 
 def gravity_animation(categories):
     """
@@ -80,10 +94,7 @@ def gravity_animation(categories):
     :param categories: A dictionary containing "low", "medium" and "high" gravity entities
     :return: Does not return anything
     """
-    import matplotlib.pyplot as plt
-    import matplotlib.animation as animation
-    import numpy as np
-
+    categories = {}
     fig, ax = plt.subplots(1, 3)
 
     def animate(frame):

@@ -1,15 +1,22 @@
 # Task 17: Import the modules csv, tui and visual
 # TODO: Your code here
+from SolarSystem import tui
 from tui import *
 from visual import *
 from csv import *
-from csv import DictReader
 
 # Task 18: Create an empty list named 'records'.
 # This will be used to store the date read from the source data file.
 # TODO: Your code here
 records = []
+
+# :)
 categories = {}
+summary = {}
+
+
+# :)
+
 
 def run():
     # Task 19: Call the function welcome of the module tui.
@@ -18,26 +25,12 @@ def run():
     welcome()
 
     while True:
-        menu1 = {
-            1: "Local Data",
-            2: "Process Data",
-            3: "Visualise Data",
-            4: "Save Data",
-            5: "Exit"
-        }
-        menu2 = {
-            1: "Retrieve entity",
-            2: "Retrieve entity details",
-            3: "Categorise entities by type",
-            4: "Categorise entities by gravity",
-            5: "Summarise entities by orbit"
-        }
-        menu3 = {
-            1: "Entities by type",
-            2: "Entities by gravity",
-            3: "Summary of orbits",
-            4: "Animate gravities"
-        }
+        menu1 = {1: "Local Data", 2: "Process Data", 3: "Visualise Data", 4: "Save Data", 5: "Exit"}
+        menu2 = {1: "Retrieve entity", 2: "Retrieve entity details", 3: "Categorise entities by type",
+                 4: "Categorise entities by gravity", 5: "Summarise entities by orbit"}
+        menu3 = {1: "Entities by type", 2: "Entities by gravity", 3: "Summary of orbits", 4: "Animate gravities"}
+        menu4 = {1: "Export as JSON", 2: "Export as TXT", 3: "Quit"}
+
         # Task 20: Using the appropriate function in the module tui, display a menu of options
         # for the different operations that can be performed on the data.
         # Assign the selected option to a suitable local variable
@@ -58,16 +51,14 @@ def run():
         # - Read each line from the CSV file and add it to the list 'records'. You should appropriately handle the case
         # where the file cannot be found
         # TODO: Your code here
-        import csv
         if choice == 1:
             started(menu1[choice])
             x = source_data_path()
             if x:
-                with open(x, newline="") as db:
+                with open(x, "r") as db:
                     for line in db.readlines():
                         records.append(line.strip().split(","))
             completed(menu1[choice])
-
         # Task 22: Check if the user selected the option for processing data.  If so, then do the following:
         # - Use the appropriate function in the module tui to display a message to indicate that the data processing
         # operation has started.
@@ -81,8 +72,7 @@ def run():
         # - Check what option has been selected
         #
         #   - If the user selected the option to retrieve an entity then
-        #       - Use the appropriate function in the module tui to indicate that the entity retrieval process
-        #       has started.
+        #       - Use the appropriate function in the module tui
         #       - Use the appropriate function in the module tui to retrieve the entity name
         #       - Find the record for the specified entity in records.  You should appropriately handle the case
         #       where the entity cannot be found.
@@ -137,64 +127,86 @@ def run():
             completed(menu1[choice])
             choice2 = process_type()  # start the submenu
             global categories
-            if not choice2:
-                print("There was no input. Please try again.")
-            else:
-                if choice2 == 1:  # 2.1.Retrieve entity
-                    started(menu2[choice2])
-                    list_entities()
-                    completed(menu2[choice2])
-                elif choice2 == 2:  # 2.2.Retrieve entities details
-                    started(menu2[choice2])
-                    x, y = entity_details()
-                    list_entity(x, y)
-                    completed(menu2[choice2])
-                elif choice2 == 3:  # categorise by type, planet or non planet
-                    started(menu2[choice2])
-                    categories = {"Planets": [], "Non-Planets": []}
-                    for row in records:
-                        if "TRUE" in row:
-                            categories["Planets"].append(row[0])
-                        else:
-                            categories["Non-Planets"].append(row[0])
-                    print("Planets: ", categories["Planets"])
-                    print("Non-Planets: ", categories["Non-Planets"])
-                    completed(menu2[choice2])
-                    #######################
-                    with open("types.txt", "w") as F:
-                        F.write(str(len(categories["Planets"])))
-                    with open("types.txt", "a") as F:
-                        F.write("\n")
-                        F.write(str(len(categories["Non-Planets"])))
-                    #################
-                elif choice2 == 4:  # Categorise entities by gravity
-                    started(menu2[choice2])
-                    categories = {"Gravity-Low": [], "Gravity-Medium": [], "Gravity-High": []}
-                    min, max = gravity_range()
-                    for row in records:
-                        if row[8] != "gravity":
-                            if float(row[8]) < min:
-                                categories["Gravity-Low"].append(row[8])
-                            elif min <= float(row[8]) < max:
-                                categories["Gravity-Medium"].append(row[8])
-                            elif float(row[8]) >= max:
-                                categories["Gravity-High"].append(row[8])
-                    print("Low G: ", categories["Gravity-Low"])
-                    print("Medium G: ", categories["Gravity-Medium"])
-                    print("High G: ", categories["Gravity-High"])
-                    completed(menu2[choice2])
-                    #######################
-                    with open("gravities.txt", "w") as F:
-                        F.write(str(len(categories["Gravity-Low"])))
-                    with open("gravities.txt", "a") as F:
-                        F.write("\n")
-                        F.write(str(len(categories["Gravity-Medium"])))
-                        F.write("\n")
-                        F.write(str(len(categories["Gravity-High"])))
+            if choice2 == 1:  # 2.1.Retrieve entity
+                started(menu2[choice2])
+                list_entities()
+                completed(menu2[choice2])
+            elif choice2 == 2:  # 2.2.Retrieve entities details
+                started(menu2[choice2])
+                x, y = entity_details()
+                list_entity(x, y)
+                completed(menu2[choice2])
+            elif choice2 == 3:  # categorise by type, planet or non planet
+                started(menu2[choice2])
+                categories = {"Planets": [], "Non-Planets": []}
+                for row in records:
+                    if "TRUE" in row:
+                        categories["Planets"].append(row[0])
+                    else:
+                        categories["Non-Planets"].append(row[0])
+                print("Planets: ", categories["Planets"])
+                print("Non-Planets: ", categories["Non-Planets"])
+                completed(menu2[choice2])
+                #######################
+                with open("types.txt", "w") as F:
+                    F.write(str(len(categories["Planets"])))
+                with open("types.txt", "a") as F:
+                    F.write("\n")
+                    F.write(str(len(categories["Non-Planets"])))
+                #################
+            elif choice2 == 4:  # Categorise entities by gravity
+                started(menu2[choice2])
+                categories = {"Gravity-Low": [], "Gravity-Medium": [], "Gravity-High": []}
+                min, max = gravity_range()
+                for row in records:
+                    if row[8] != "gravity":
+                        if float(row[8]) < min:
+                            categories["Gravity-Low"].append(row[0])
+                        elif min <= float(row[8]) < max:
+                            categories["Gravity-Medium"].append(row[0])
+                        elif float(row[8]) >= max:
+                            categories["Gravity-High"].append(row[0])
+                print("Low G: ", categories["Gravity-Low"])
+                print("Medium G: ", categories["Gravity-Medium"])
+                print("High G: ", categories["Gravity-High"])
+                completed(menu2[choice2])
+                #######################
+                with open("gravities.txt", "w") as F:
+                    F.write(str(len(categories["Gravity-Low"])))
+                with open("gravities.txt", "a") as F:
+                    F.write("\n")
+                    F.write(str(len(categories["Gravity-Medium"])))
+                    F.write("\n")
+                    F.write(str(len(categories["Gravity-High"])))
 
-                    #################
-                elif choice2 == 5:
-                    started(menu2[choice2])
+                #################
+            elif choice2 == 5:
+                started(menu2[choice2])
+                from tui import orbits
+                summary = {"OrbitedPlanet":
+                               {"small": [],
+                                "large": []
+                                }
+                           }
+                to_orbit = tui.orbits()
+                for row in records:
+                    if row[10] != "meanRadius":
+                        if row[0] in to_orbit:
+                            if float(row[10]) < 100:
+                                summary["OrbitedPlanet"]["small"].append(row[0])
+                            else:
+                                summary["OrbitedPlanet"]["large"].append(row[0])
+                print(summary)
+                #######################
+                with open("to_orbit.txt", "w") as F:
+                    F.write(str(len(summary["OrbitedPlanet"]["small"])))
+                with open("to_orbit.txt", "a") as F:
+                    F.write("\n")
+                    F.write(str(len(summary["OrbitedPlanet"]["large"])))
+                #################
+                completed(menu2[choice2])
+
+
         # Task 23: Check if the user selected the option for visualising data.  If so, then do the following:
         # - Use the appropriate function in the module tui to indicate that the data visualisation operation
         # has started.
@@ -247,7 +259,7 @@ def run():
             completed(menu1[choice])
             choice3 = visualise()  # start the submenu
             if not choice3:
-                print("There was no input. Please try again.")
+                print(error(choice3))
             else:
                 if choice3 == 1:  # Entities by type
                     started(menu3[choice3])
@@ -259,13 +271,13 @@ def run():
                     completed(menu3[choice3])
                 elif choice3 == 3:  # Summary of orbits
                     started(menu3[choice3])
-
+                    from visual import orbits
+                    orbits("summary")
                     completed(menu3[choice3])
                 elif choice3 == 4:  # Animate gravities
                     started(menu3[choice3])
                     gravity_animation(categories)
                     completed(menu3[choice3])
-
 
 
         # Task 28: Check if the user selected the option for saving data.  If so, then do the following:
@@ -281,6 +293,25 @@ def run():
         # TODO: Your code here
         elif choice == 4:
             started(menu1[choice])
+
+            choice4 = save()
+            if choice4 == 1:
+                file_name = str(input("How would you like to name your file? "))
+                x = str(file_name + ".json")
+                x = open(x, "w")
+                x.close()
+                print("Program will now quit.")
+                return choice
+            elif choice == 2:
+                file_name = str(input("How would you like to name your file? "))
+                x = str(file_name + ".txt")
+                x = open(x, "w")
+                x.close()
+                print("Program will now quit.")
+                return choice
+            elif choice == 3:
+                print("Program will now quit.")
+                break
             completed(menu1[choice])
 
         # Task 29: Check if the user selected the option for exiting.  If so, then do the following:

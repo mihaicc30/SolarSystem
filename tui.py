@@ -39,10 +39,10 @@ def menu():
     4. Save Data
     5. Exit
     """)
-
     option = int(input("    Input: "))
-    if option > 5 or option < 1:
+    if 1 > option > 5:
         print("Sorry, that option is not available. Try again.")
+        return None
     else:
         return option
 
@@ -130,21 +130,19 @@ def process_type():
     :return: None if an invalid selection made otherwise an integer corresponding to a valid option
     """
     # TODO: Your code here
-    option = input("""
+    option = int(input("""
     1. Retrieve entity
     2. Retrieve entity details
     3. Categorise entities by type
     4. Categorise entities by gravity
     5. Summarise entities by orbit
     
-    Input: """)
-    if not option:
-        print()
-    elif int(option) > 5:
-        print("Sorry, that is not an option.")
+    Input: """))
+    if 1 > option or option > 5:
+        print(f"Sorry, {option} is not an option.")
         return None
     else:
-        return int(option)
+        return option
 
 
 def entity_name():
@@ -159,7 +157,6 @@ def entity_name():
     # TODO: Your code here
 
     e_name = input("Please enter the name of an entity.\n")
-    # print("You have entered the entity", e_name + ".")
     if e_name:
         return e_name
     else:
@@ -207,9 +204,8 @@ def list_entity(entity, cols=[]):
     :return: does not return anything
     """
     # TODO: Your code here
-
     temp2 = []
-    with open(source_data_path()) as file:
+    with open("data/sol_data.csv") as file:
         for line in file.readlines():
             if line.startswith(entity):
                 temp1 = line.strip().split(",")
@@ -244,7 +240,7 @@ def list_entities():
     :return: Does not return anything
     """
     # TODO: Your code here
-    list_entity(str(input("Enter an entity.\n")))
+    list_entity(input("Enter an entity : \n"))
 
 
 def list_categories():
@@ -260,7 +256,8 @@ def list_categories():
     :return: Does not return anything
     """
     # TODO: Your code here
-    categories = {"": [], "": []}
+    categories = {"Planets": [], "Non-Planets": [], "Gravity-Low": [], "Gravity-Medium": [], "Gravity-High": [],
+                  "meanRadius": []}
 
 
 def gravity_range():
@@ -275,8 +272,10 @@ def gravity_range():
     """
 
     # TODO: Your code here
-    min_gravity = float(input("Input min value of gravity: "))
-    max_gravity = float(input("Input max value of gravity: "))
+    min_gravity = float(input("Input min limit for gravity: "))
+    max_gravity = float(input("Input max limit for gravity: "))
+    if min_gravity > max_gravity:
+        min_gravity, max_gravity = max_gravity, min_gravity  # just in case the user is "confused" :)
     return min_gravity, max_gravity
 
 
@@ -355,31 +354,16 @@ def save():
     :return: None if an invalid selection is made otherwise an integer corresponding to a valid option
     """
     # TODO: Your code here
-    while True:
-        choice = int(input("""Choose from the following menu 
-        how you would like to save your data:
 
-        1. Export as JSON
-        2. Export as TXT
-        3. Quit
-        """))
-        if choice == 1:
-            file_name = str(input("How would you like to name your file? "))
-            x = str(file_name + ".json")
-            x = open(x, "w")
-            x.close()
-            print("Program will now quit.")
-            return choice
-        elif choice == 2:
-            file_name = str(input("How would you like to name your file? "))
-            x = str(file_name + ".txt")
-            x = open(x, "w")
-            x.close()
-            print("Program will now quit.")
-            return choice
-        elif choice == 3:
-            print("Program will now quit.")
-            break
-        else:
-            print("You input an invalid option. Try again.")
+    choice = int(input("""Choose from the following menu 
+    how you would like to save your data:
 
+    1. Export as JSON
+    2. Export as TXT
+    3. Quit
+    """))
+    if 1 > choice < 4:
+        error(choice)
+        return None
+    else:
+        return choice
