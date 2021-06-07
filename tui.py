@@ -1,3 +1,6 @@
+from SolarSystem import main
+
+
 def welcome():
     """
     Task 1: Display a welcome message.
@@ -104,7 +107,7 @@ def source_data_path():
     :return: None if the file path does not end in 'csv' otherwise return the file path entered by the user
     """
     # TODO: Your code here
-    import os.path
+    import os
     path = str(input("Please enter the file path.\n"))
     if path.endswith(".csv") and os.path.isfile(path):
         return path
@@ -178,7 +181,7 @@ def entity_details():
     entity = str(input("Name the entity.\n"))
     entity_index = []
     number_of_indexes_to_see = input("How many indexes you would like to see?\nIndex numbers: ")
-    if not number_of_indexes_to_see:
+    if not number_of_indexes_to_see:  # if there is no input, then set it to 0
         number_of_indexes_to_see == 0
     else:
         for i in range(int(number_of_indexes_to_see)):
@@ -187,23 +190,7 @@ def entity_details():
 
 
 def list_entity(entity, cols=[]):
-    """
-    Task 10: Display an entity. Only the data for the specified column indexes will be displayed.
-    If no column indexes have been specified, then all the data for the entity will be displayed.
-
-    The entity is a list of values corresponding to particular Solar System space entity
-    E.g. ['Earth', TRUE, 9.8].
-    The function should only display those values from the entity list that correspond to the column
-    indexes provided as part of cols.
-    E.g. if cols is [0, 2] then for the entity ['Earth', TRUE, 9.8] the following will be displayed
-    ['Earth', 9.8]
-    E.g. if cols is an empty list then all the values will be displayed i.e. ['Earth', TRUE, 9.8]
-
-    :param entity: A list of data values related to an entity
-    :param cols: A list of integer values that represent column indexes
-    :return: does not return anything
-    """
-    # TODO: Your code here
+    #  Task 10: Display an entity.
     temp2 = []
     with open("data/sol_data.csv") as file:
         for line in file.readlines():
@@ -243,7 +230,7 @@ def list_entities():
     list_entity(input("Enter an entity : \n"))
 
 
-def list_categories():
+def list_categories(categories):
     """
     Task 12: Display the contents of the dictionary categories.
 
@@ -256,8 +243,7 @@ def list_categories():
     :return: Does not return anything
     """
     # TODO: Your code here
-    categories = {"Planets": [], "Non-Planets": [], "Gravity-Low": [], "Gravity-Medium": [], "Gravity-High": [],
-                  "meanRadius": []}
+    print(categories)
 
 
 def gravity_range():
@@ -362,7 +348,7 @@ def save():
     2. Export as TXT
     3. Quit
     """))
-    if 1 > choice < 4:
+    if 0 > choice > 4:
         error(choice)
         return None
     else:

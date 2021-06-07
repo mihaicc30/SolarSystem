@@ -78,11 +78,12 @@ def orbits(summary):
     x = 0
     y1 = int(small)
     y2 = int(large)
-    print( y1, y2)
+    print(y1, y2)
     # ax[0].bar(x,y1)
     # ax[1].bar(x,y2)
 
     plt.show()
+
 
 def gravity_animation(categories):
     """

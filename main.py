@@ -1,21 +1,24 @@
+from SolarSystem import tui
+import json
+import os
 # Task 17: Import the modules csv, tui and visual
 # TODO: Your code here
-from SolarSystem import tui
 from tui import *
 from visual import *
-from csv import *
+import csv
 
 # Task 18: Create an empty list named 'records'.
 # This will be used to store the date read from the source data file.
 # TODO: Your code here
 records = []
 
-# :)
-categories = {}
-summary = {}
+# i know it is not 100% completed and i am still testing my project, will leave these for now here
+categories = {"Planets": [], "Not-Planets": [], "Gravity-Low": [], "Gravity-Medium": [], "Gravity-High": [],
+              "meanRadius": []}
+summary = {"OrbitedPlanet": {"small": [], "large": []}}
 
 
-# :)
+#
 
 
 def run():
@@ -30,6 +33,7 @@ def run():
                  4: "Categorise entities by gravity", 5: "Summarise entities by orbit"}
         menu3 = {1: "Entities by type", 2: "Entities by gravity", 3: "Summary of orbits", 4: "Animate gravities"}
         menu4 = {1: "Export as JSON", 2: "Export as TXT", 3: "Quit"}
+        # created these dictionaries to avoid code repetition when starting/completing a task
 
         # Task 20: Using the appropriate function in the module tui, display a menu of options
         # for the different operations that can be performed on the data.
@@ -56,8 +60,10 @@ def run():
             x = source_data_path()
             if x:
                 with open(x, "r") as db:
-                    for line in db.readlines():
-                        records.append(line.strip().split(","))
+                    csv_reader = csv.reader(db, delimiter=",")
+                    head = next(csv_reader)
+                    for row in csv_reader:
+                        records.append(row)
             completed(menu1[choice])
         # Task 22: Check if the user selected the option for processing data.  If so, then do the following:
         # - Use the appropriate function in the module tui to display a message to indicate that the data processing
@@ -131,63 +137,69 @@ def run():
                 started(menu2[choice2])
                 list_entities()
                 completed(menu2[choice2])
+
             elif choice2 == 2:  # 2.2.Retrieve entities details
                 started(menu2[choice2])
-                x, y = entity_details()
-                list_entity(x, y)
+                xname, xindex = entity_details()
+                list_entity(xname, xindex)
                 completed(menu2[choice2])
-            elif choice2 == 3:  # categorise by type, planet or non planet
+
+            elif choice2 == 3:  # 2.3 categorise by type, planet or non planet
                 started(menu2[choice2])
-                categories = {"Planets": [], "Non-Planets": []}
+                categories["Planets"].clear()
+                categories["Not-Planets"].clear()
                 for row in records:
-                    if "TRUE" in row:
-                        categories["Planets"].append(row[0])
-                    else:
-                        categories["Non-Planets"].append(row[0])
-                print("Planets: ", categories["Planets"])
-                print("Non-Planets: ", categories["Non-Planets"])
+                    if row != "eName":
+                        if "TRUE" in row:
+                            categories["Planets"].append(row[0])
+                        else:
+                            categories["Not-Planets"].append(row[0])
+                print(str(len(categories["Planets"])) + " Planets: ")
+                list_categories(categories["Planets"])
+                print(str(len(categories["Not-Planets"])) + " Not-Planets: ")
+                list_categories(categories["Not-Planets"])
                 completed(menu2[choice2])
                 #######################
                 with open("types.txt", "w") as F:
                     F.write(str(len(categories["Planets"])))
-                with open("types.txt", "a") as F:
                     F.write("\n")
-                    F.write(str(len(categories["Non-Planets"])))
+                    F.write(str(len(categories["Not-Planets"])))
                 #################
-            elif choice2 == 4:  # Categorise entities by gravity
+
+            elif choice2 == 4:  # 2.4 Categorise entities by gravity
                 started(menu2[choice2])
-                categories = {"Gravity-Low": [], "Gravity-Medium": [], "Gravity-High": []}
-                min, max = gravity_range()
+                minn, maxx = gravity_range()
+                categories["Gravity-Low"].clear()
+                categories["Gravity-Medium"].clear()
+                categories["Gravity-High"].clear()
                 for row in records:
                     if row[8] != "gravity":
-                        if float(row[8]) < min:
+                        if float(row[8]) < minn:
                             categories["Gravity-Low"].append(row[0])
-                        elif min <= float(row[8]) < max:
+                        elif minn <= float(row[8]) < maxx:
                             categories["Gravity-Medium"].append(row[0])
-                        elif float(row[8]) >= max:
+                        elif float(row[8]) >= maxx:
                             categories["Gravity-High"].append(row[0])
-                print("Low G: ", categories["Gravity-Low"])
-                print("Medium G: ", categories["Gravity-Medium"])
-                print("High G: ", categories["Gravity-High"])
+                print(str(len(categories["Gravity-Low"])) + " Low Gravity:")
+                list_categories(categories["Gravity-Low"])
+                print(str(len(categories["Gravity-Medium"])) + " Medium Gravity:")
+                list_categories(categories["Gravity-Medium"])
+                print(str(len(categories["Gravity-High"])) + " High Gravity:")
+                list_categories(categories["Gravity-High"])
                 completed(menu2[choice2])
                 #######################
-                with open("gravities.txt", "w") as F:
+                with open("gravities.txt", "w") as F:  # writing the results to a file which i plan to load in other places
                     F.write(str(len(categories["Gravity-Low"])))
-                with open("gravities.txt", "a") as F:
                     F.write("\n")
                     F.write(str(len(categories["Gravity-Medium"])))
                     F.write("\n")
                     F.write(str(len(categories["Gravity-High"])))
-
                 #################
-            elif choice2 == 5:
+
+            elif choice2 == 5:  # 2.5 Summarise entities by orbit
                 started(menu2[choice2])
                 from tui import orbits
-                summary = {"OrbitedPlanet":
-                               {"small": [],
-                                "large": []
-                                }
-                           }
+                global summary
                 to_orbit = tui.orbits()
                 for row in records:
                     if row[10] != "meanRadius":
@@ -196,11 +208,10 @@ def run():
                                 summary["OrbitedPlanet"]["small"].append(row[0])
                             else:
                                 summary["OrbitedPlanet"]["large"].append(row[0])
-                print(summary)
+                list_categories(summary)
                 #######################
-                with open("to_orbit.txt", "w") as F:
+                with open("to_orbit.txt", "w") as F:  # writing the results to a file which i plan to load in other places
                     F.write(str(len(summary["OrbitedPlanet"]["small"])))
-                with open("to_orbit.txt", "a") as F:
                     F.write("\n")
                     F.write(str(len(summary["OrbitedPlanet"]["large"])))
                 #################
@@ -279,7 +290,6 @@ def run():
                     gravity_animation(categories)
                     completed(menu3[choice3])
 
-
         # Task 28: Check if the user selected the option for saving data.  If so, then do the following:
         # - Use the appropriate function in the module tui to indicate that the save data operation has started.
         # - Save the data (see below)
@@ -291,28 +301,34 @@ def run():
         # a JSON file using in the following order: all the planets in alphabetical order followed by non-planets
         # in alphabetical order.
         # TODO: Your code here
+
+        # i know its not OOP, just needed more time to get here:( sorry
         elif choice == 4:
             started(menu1[choice])
+            completed(menu1[choice])
 
             choice4 = save()
-            if choice4 == 1:
+            if choice4 == 1:  # write as json
+                started(menu4[choice4])
                 file_name = str(input("How would you like to name your file? "))
                 x = str(file_name + ".json")
-                x = open(x, "w")
-                x.close()
-                print("Program will now quit.")
-                return choice
-            elif choice == 2:
+                with open(x, "w") as file:
+                    json.dump(records, file)
+                completed(menu4[choice4])
+
+            elif choice4 == 2:  # write as txt
+                started(menu4[choice4])
                 file_name = str(input("How would you like to name your file? "))
                 x = str(file_name + ".txt")
-                x = open(x, "w")
-                x.close()
-                print("Program will now quit.")
-                return choice
-            elif choice == 3:
-                print("Program will now quit.")
-                break
-            completed(menu1[choice])
+                with open(x, "w") as file:
+                    file.writelines("%s\n" % item for item in records)
+                completed(menu4[choice4])
+
+            elif choice4 == 3:  # quit
+                started(menu4[choice4])
+                print("Program will now quit the saving menu.")
+                completed(menu4[choice4])
+
 
         # Task 29: Check if the user selected the option for exiting.  If so, then do the following:
         # break out of the loop
